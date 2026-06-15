@@ -1,0 +1,15 @@
+[package]
+name = "rumble-canvas"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+rumble-canvas-domain = { path = "../domain" }
+rumble-canvas-handoff = { path = "../handoff" }
+rumble-canvas-package = { path = "../package" }
+rumble-canvas-store = { path = "../store" }
+serde = { workspace = true }
+serde_json.workspace = true
