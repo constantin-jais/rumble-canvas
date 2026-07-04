@@ -1,6 +1,6 @@
 use rumble_canvas_domain::{
-    validate_actor_permissions, ActorReference, ActorType, MembershipStatus, PermissionPrimitive,
-    RoleAssignment, WorkspaceMembership,
+    sample_workspace, validate_actor_permissions, ActorReference, ActorType, MembershipStatus,
+    PermissionPrimitive, RoleAssignment, WorkspaceMembership,
 };
 
 #[test]
@@ -103,4 +103,28 @@ fn test_actor_type_service_serializes_as_snake_case() {
         json.contains("\"actor_type\":\"service\""),
         "Service serializes as lowercase 'service'"
     );
+}
+
+#[test]
+fn test_sample_workspace_emits_tenant_id() {
+    let workspace = sample_workspace();
+    assert_eq!(workspace.tenant_id, "tenant:rumble-canvas-local");
+    assert_eq!(
+        workspace.workspace_identity().tenant_id,
+        "tenant:rumble-canvas-local"
+    );
+}
+
+#[test]
+fn test_workspace_identity_serializes_contract_root() {
+    let identity = sample_workspace().workspace_identity();
+    let value = serde_json::to_value(identity).expect("workspace identity serializes");
+    assert_eq!(value["workspace_id"], "workspace:rumble-canvas-mvp");
+    assert_eq!(value["tenant_id"], "tenant:rumble-canvas-local");
+    assert!(value["memberships"]
+        .as_array()
+        .is_some_and(|items| !items.is_empty()));
+    assert!(value["role_assignments"]
+        .as_array()
+        .is_some_and(|items| !items.is_empty()));
 }
