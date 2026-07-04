@@ -5,6 +5,9 @@ use serde_json::{json, Value};
 use sha2::{Digest, Sha256};
 use thiserror::Error;
 
+pub mod token_sealer;
+pub use token_sealer::{seal_workspace_identity_token, verify_workspace_authorization};
+
 #[derive(Debug, Error, PartialEq, Eq)]
 pub enum HandoffError {
     #[error("execution is forbidden from Canvas MVP")]
@@ -34,12 +37,6 @@ impl Default for ExecutionPolicy {
             requires_human_approval_for_execution: true,
         }
     }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct ActorReference {
-    pub actor_id: String,
-    pub actor_type: String,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
