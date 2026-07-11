@@ -65,7 +65,7 @@ curl --fail --location --retry 3 \
   "https://github.com/libre-ai/proof-kit/archive/$WRENCH_REV.tar.gz" \
   --output "/tmp/wrench-$WRENCH_REV.tar.gz"
 tar -xzf "/tmp/wrench-$WRENCH_REV.tar.gz" -C /tmp
-cargo install --locked --path "/tmp/wrench-$WRENCH_REV/inspect"
+cargo install --locked --path "/tmp/proof-kit-$WRENCH_REV/inspect"
 ```
 
 If `wrench-inspect` is not available, the `wrench check` command gracefully
